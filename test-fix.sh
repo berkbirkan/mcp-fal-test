@@ -32,9 +32,9 @@ if docker run -d \
     
     echo "✅ Container başlatıldı"
     
-    # 15 saniye bekle (async server için daha uzun)
+    # 10 saniye bekle (sync server için daha kısa)
     echo "Container'ın başlamasını bekliyor..."
-    sleep 15
+    sleep 10
     
     # Container durumunu kontrol et
     if docker ps | grep -q "mcp-fal-server"; then
@@ -46,7 +46,7 @@ if docker run -d \
         
         # Port testi
         echo "🌐 Port testi yapılıyor..."
-        sleep 10  # Async server için ekstra bekleme
+        sleep 5  # Sync server için daha kısa bekleme
         if curl -s -o /dev/null -w "%{http_code}" http://localhost:8765 | grep -q "200\|404\|405"; then
             echo "✅ Port 8765 erişilebilir"
         else

@@ -1,0 +1,36 @@
+services:
+  mcp-server:
+    build: .
+    container_name: mcp-fal-server
+    networks:
+      - mcp-network
+    ports:
+      - "8080:8080"  # Host port 8080 -> Container port 8080
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8080
+      - FAL_KEY=${FAL_KEY:-}  # Environment variable'dan al
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      - ./logs:/app/logs  # Log dosyaları için volume
+    # Güvenlik ayarları
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/tmp
+
+networks:
+  mcp-network:
+    driver: bridge
+    internal: false  # Diğer container'lar erişebilir ama dış dünyaya kapalı
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

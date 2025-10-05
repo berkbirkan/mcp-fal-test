@@ -72,7 +72,7 @@ print_status "MCP server başlatılıyor..."
 if docker run -d \
     --name mcp-fal-server \
     --restart unless-stopped \
-    -p 8080:8080 \
+    -p 8765:8080 \
     -e HOST=0.0.0.0 \
     -e PORT=8080 \
     -e FAL_KEY="${FAL_KEY:-}" \
@@ -85,9 +85,10 @@ if docker run -d \
     sleep 5
     if docker ps | grep -q "mcp-fal-server"; then
         print_status "Server bilgileri:"
-        echo "  - URL: http://localhost:8080"
+        echo "  - URL: http://localhost:8765"
         echo "  - Container adı: mcp-fal-server"
-        echo "  - Port: 8080"
+        echo "  - Host Port: 8765"
+        echo "  - Container Port: 8080"
         echo ""
         print_status "Logları görüntülemek için:"
         echo "  docker logs -f mcp-fal-server"

@@ -55,7 +55,7 @@ PORT=8080
 ### Docker Compose Ayarları
 
 `docker-compose.yml` dosyasında:
-- Port mapping: `8080:8080`
+- Port mapping: `8765:8080`
 - Network: `mcp-network`
 - Restart policy: `unless-stopped`
 
@@ -63,7 +63,7 @@ PORT=8080
 
 ### Host'tan Erişim
 ```
-http://localhost:8080
+http://localhost:8765
 ```
 
 ### Diğer Docker Container'lardan Erişim
@@ -105,7 +105,7 @@ Bu Docker kurulumu aşağıdaki güvenlik önlemlerini içerir:
 ## 📊 Sağlık Kontrolü
 
 Container otomatik olarak sağlık kontrolü yapar:
-- URL: `http://localhost:8080/health`
+- URL: `http://localhost:8765/health`
 - Interval: 30 saniye
 - Timeout: 10 saniye
 - Retries: 3

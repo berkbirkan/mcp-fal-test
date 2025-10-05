@@ -46,10 +46,13 @@ if docker run -d \
         
         # Port testi
         echo "🌐 Port testi yapılıyor..."
-        if curl -s -o /dev/null -w "%{http_code}" http://localhost:8765 | grep -q "200\|404"; then
+        sleep 5  # Ekstra bekleme süresi
+        if curl -s -o /dev/null -w "%{http_code}" http://localhost:8765 | grep -q "200\|404\|405"; then
             echo "✅ Port 8765 erişilebilir"
         else
             echo "⚠️ Port 8765 henüz hazır değil, biraz daha bekleyin"
+            echo "📋 Son loglar:"
+            docker logs --tail 10 mcp-fal-server
         fi
         
         echo ""

@@ -7,6 +7,7 @@ providing tools to interact with fal.ai models and services.
 
 import os
 import sys
+import asyncio
 from fastmcp import FastMCP
 from api.models import register_model_tools
 from api.generate import register_generation_tools
@@ -19,7 +20,7 @@ register_model_tools(mcp)
 register_generation_tools(mcp)
 register_storage_tools(mcp)
 
-def main():
+async def main():
     try:
         get_api_key()
     except ValueError:
@@ -31,10 +32,10 @@ def main():
         port = int(os.getenv("PORT", "8080"))
         
         print(f"Starting MCP server on {host}:{port}")
-        mcp.run(transport="streamable-http", host=host, port=port)
+        await mcp.run_sse_async(host=host, port=port)
     except Exception as e:
         print(f"Error starting server: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

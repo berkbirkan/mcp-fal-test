@@ -32,10 +32,18 @@ async def main():
         port = int(os.getenv("PORT", "8080"))
         
         print(f"Starting MCP server on {host}:{port}")
-        await mcp.run_http_async(host=host, port=port, transport="sse")
+        
+        # En basit kullanım - parametresiz
+        await mcp.run_http_async()
+        
     except Exception as e:
-        print(f"Error starting server: {e}")
-        sys.exit(1)
+        print(f"Error with run_http_async: {e}")
+        try:
+            print("Trying simple run() method...")
+            mcp.run()
+        except Exception as e2:
+            print(f"Simple run() also failed: {e2}")
+            sys.exit(1)
 
 if __name__ == "__main__":
     asyncio.run(main())

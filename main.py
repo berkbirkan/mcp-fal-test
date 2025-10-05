@@ -32,7 +32,7 @@ async def main():
         port = int(os.getenv("PORT", "8080"))
         
         print(f"Starting MCP server on {host}:{port}")
-        await mcp.run_sse_async(host=host, port=port)
+        await mcp.run_http_async(host=host, port=port, transport="sse")
     except Exception as e:
         print(f"Error starting server: {e}")
         sys.exit(1)
